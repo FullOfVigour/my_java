@@ -1,6 +1,6 @@
 package cn.libra.server.dubboMain;
 
-        import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ServerDuboMain {
 
