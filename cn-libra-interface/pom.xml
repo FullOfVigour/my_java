@@ -158,13 +158,15 @@
         <plugins>
 
             <plugin>
-                <configuration>
-                    <minimizeJar>true</minimizeJar>
-                </configuration>
-                
+
+
+
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>1.4</version>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
