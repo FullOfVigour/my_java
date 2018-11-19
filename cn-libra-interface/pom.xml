@@ -159,8 +159,6 @@
 
             <plugin>
 
-
-
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>1.4</version>
@@ -198,6 +196,7 @@
                                         implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.schemas</resource>
                                 </transformer>
+                                <forceCreation>true</forceCreation>
                             </transformers>
                         </configuration>
                     </execution>
