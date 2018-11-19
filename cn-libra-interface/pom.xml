@@ -166,7 +166,8 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                                <filters>
+                            <minimizeJar>true</minimizeJar>
+                            <filters>
                                     <filter>
                                         <artifact>*:*</artifact>
                                         <excludes>
