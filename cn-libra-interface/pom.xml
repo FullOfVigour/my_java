@@ -156,11 +156,6 @@
 
         <plugins>
             <plugin>
-
-                <configuration>
-                    <minimizeJar>true</minimizeJar>
-                </configuration>
-
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>1.4</version>
@@ -171,6 +166,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <minimizeJar>true</minimizeJar>
                             <filters>
                                     <filter>
                                         <artifact>*:*</artifact>
