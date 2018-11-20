@@ -1,6 +1,7 @@
 package cn.libra.inter.controller;
 
 import cn.libra.inter.service.LibraService;
+import cn.libra.utils.util.exception.ControllerException;
 import cn.libra.utils.util.redis.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

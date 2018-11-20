@@ -1,6 +1,7 @@
 package cn.libra.server.inter.Impl;
 
 import cn.libra.server.inter.ServerInter;
+import cn.libra.server.service.BaseServiece;
 import cn.libra.server.service.ConsultService;
 import cn.libra.server.service.callServeice.Provide;
 import cn.libra.utils.util.exception.ControllerException;
@@ -15,6 +16,7 @@ import java.lang.reflect.Method;
 
 	@Autowired ConsultService consultService;
 	@Autowired Provide provide;
+	@Autowired BaseServiece baseServiece;
 
 	public JSONObject callServer(String serviceName, String methodName, JSONObject params) throws ControllerException {
 		Object methodResult = null;
@@ -31,6 +33,12 @@ import java.lang.reflect.Method;
 				methodResult = method.invoke(consultService, params);
 				break;
 			}
+			case "base": {
+				Method method = baseServiece.getClass().getMethod(methodName, JSONObject.class);
+				methodResult = method.invoke(baseServiece, params);
+				break;
+			}
+
 			default:
 				throw new ControllerException("不存在名字为【" + serviceName + "】的service");
 			}

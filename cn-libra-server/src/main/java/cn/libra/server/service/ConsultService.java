@@ -17,7 +17,7 @@ public class ConsultService {
 	**/
 	public JSONObject listConsult(JSONObject params){
 
-		return  		receive.getUserMap();
+		return receive.getUserMap();
 	}
 
 

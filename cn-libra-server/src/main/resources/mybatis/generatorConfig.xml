@@ -67,7 +67,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="consult"
+        <table tableName="user"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true"></table>
