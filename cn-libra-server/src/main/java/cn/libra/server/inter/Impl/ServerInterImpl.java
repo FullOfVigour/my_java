@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 @Controller public class ServerInterImpl implements ServerInter {
@@ -18,9 +17,8 @@ import java.lang.reflect.Method;
 	@Autowired Provide provide;
 	@Autowired BaseServiece baseServiece;
 
-	public JSONObject callServer(String serviceName, String methodName, JSONObject params) throws ControllerException {
+	public JSONObject callServer(String serviceName, String methodName, JSONObject params) throws Exception {
 		Object methodResult = null;
-		try {
 			switch (serviceName) {
 			case "provide": {
 				Method method = null;
@@ -42,13 +40,7 @@ import java.lang.reflect.Method;
 			default:
 				throw new ControllerException("不存在名字为【" + serviceName + "】的service");
 			}
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+
 		return makeReturnJson(methodResult, serviceName, methodName);
 	}
 
