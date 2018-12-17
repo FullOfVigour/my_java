@@ -43,6 +43,7 @@ import java.util.List;
 		}
 		if (!user.getPass().equals(pass)) {
 			throw new ControllerException("密码错误");
+
 		}
 
 		return "SUCCESS";
