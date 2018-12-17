@@ -48,4 +48,10 @@ import java.util.List;
 		return "SUCCESS";
 	}
 
+	@Transactional(readOnly = false)
+	public String login2(JSONObject params) {
+		params.getString("acc");
+		return "SUCCESS";
+	}
+
 }
