@@ -73,6 +73,7 @@ public class ExceptionFilterTest implements Filter {
                     json.put("mess","操作失败：" + (StringUtil.isNotEmpty(supperMessage) ? supperMessage : "" )+ (StringUtil.isNotEmpty(message) ? ":" +message : ""));
 
                     error.put("error",json);
+                    error.put("data",new JSONObject());
 
                     // 如果是checked异常，直接抛出
                     if (! (exception instanceof RuntimeException) && (exception instanceof Exception)) {

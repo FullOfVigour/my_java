@@ -22,8 +22,8 @@ import java.util.List;
 	 * @author: sx
 	 **/
 	public String login(JSONObject params) {
-		String acc = params.getString("acc");
-		String pass = params.getString("pass");
+		String loginName = params.getString("loginName");
+		String password = params.getString("password");
 
 //		UserExample userExample = new UserExample();
 //		userExample.createCriteria().andAccEqualTo(acc);
@@ -37,16 +37,18 @@ import java.util.List;
 		//			throw  new ControllerException("密码错误");
 		//		}
 
-		User user = userMapper.findByAcc(acc);
+		User user = userMapper.findByAcc(loginName);
 		if (user == null) {
 			throw new ControllerException("账号不存在");
 		}
-		if (!user.getPass().equals(pass)) {
+		if (!user.getPass().equals(password)) {
 			throw new ControllerException("密码错误");
-
 		}
 
 		return "SUCCESS";
 	}
+
+
+
 
 }

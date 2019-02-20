@@ -1,6 +1,7 @@
 package cn.libra.inter.controller;
 
 import cn.libra.inter.service.LibraService;
+import cn.libra.utils.util.*;
 import cn.libra.utils.util.exception.ControllerException;
 import cn.libra.utils.util.redis.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -16,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import java.net.URLDecoder;
 
 
 @Component
@@ -33,10 +35,18 @@ public class LibraController implements DubboCotroller {
     @POST
     @Path("{childrenName}_{serviceName}_{methodName}")
     @ResponseBody
-    @Produces({MediaType.APPLICATION_JSON + "; " + MediaType.CHARSET_PARAMETER + "=UTF-8", MediaType.TEXT_XML + "; " + MediaType.CHARSET_PARAMETER + "=UTF-8"})
+    @Produces({MediaType.APPLICATION_FORM_URLENCODED + "; " + MediaType.CHARSET_PARAMETER + "=UTF-8", MediaType.TEXT_XML + "; " + MediaType.CHARSET_PARAMETER + "=UTF-8"})
     public JSONObject callController(String paramsStr, @Context HttpServletRequest httpServletRequest, @Context HttpServletResponse httpServletResponse, @PathParam("childrenName") String childrenName, @PathParam("serviceName") String serviceName, @PathParam("methodName") String methodName) throws Exception {
 
+        // 对前台数据根据进行转码,将其解析为 json 类型的 String
+        paramsStr = URLDecoder.decode(paramsStr);
+        if (paramsStr.indexOf("apiparams=") > -1) {
+            paramsStr = paramsStr.replaceFirst("apiparams=", "");
+        }
+
         JSONObject params = JSONObject.parseObject(paramsStr);
+
+
         params = initParams(params);
         String type = params.getString("userType");
 
@@ -66,6 +76,17 @@ public class LibraController implements DubboCotroller {
             paramsStr = new JSONObject();
         }
         return paramsStr;
+    }
+
+    @POST
+    @Path("base_upload")
+    @ResponseBody
+    @Produces({MediaType.APPLICATION_FORM_URLENCODED + "; " + MediaType.CHARSET_PARAMETER + "=UTF-8", MediaType.TEXT_XML + "; " + MediaType.CHARSET_PARAMETER + "=UTF-8"})
+    public String upload(@Context HttpServletRequest httpServletRequest,@Context HttpServletResponse httpServletResponse) throws Exception {
+
+        FileUploadUtil fileUploadUtil = new FileUploadUtil(httpServletRequest);
+        String upload = fileUploadUtil.Upload();
+        return upload;
     }
 
 

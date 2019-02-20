@@ -8,4 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface DubboCotroller {
 
     public JSONObject callController(String paramsStr, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String childrenName, String serviceName, String methodName) throws  Exception ;
+
+    public String upload(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws Exception ;
 }

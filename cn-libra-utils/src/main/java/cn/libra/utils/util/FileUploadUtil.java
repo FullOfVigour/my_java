@@ -23,10 +23,10 @@ import java.util.regex.Pattern;
 public class FileUploadUtil {
 
     //当上传文件超过限制时设定的临时文件位置，注意是绝对路径
-    private String tempPath = System.getProperties().getProperty("java.io.tmpdir")+ "\\Libra" + "\\File";
+    private String tempPath = System.getProperties().getProperty("java.io.tmpdir")+ "/../usr/img/Libra" + "/File";
 
     //文件上传目标目录，注意是绝对路径
-    private String dstPath = System.getProperties().getProperty("user.home")+ "\\Libra" + "\\File";
+    private String dstPath = System.getProperties().getProperty("user.home")+ "/../usr/img/Libra" + "/File";
 
     //新文件名称，不设置时默认为原文件名
     private String newFileName = null;
@@ -58,6 +58,10 @@ public class FileUploadUtil {
     public FileUploadUtil(String tempPath, String destinationPath, HttpServletRequest fileuploadRequest){
         this.tempPath   = tempPath;
         this.dstPath = destinationPath;
+        this.fileuploadReq = fileuploadRequest;
+    }
+
+    public FileUploadUtil(HttpServletRequest fileuploadRequest){
         this.fileuploadReq = fileuploadRequest;
     }
 
@@ -163,7 +167,7 @@ public class FileUploadUtil {
         } catch (FileUploadException e) {
             System.out.println(e);
         }
-        return dstPath+"\\"+name;
+        return "http://47.99.219.43:81/Libra/File"+"/"+name;
     }
 
     /**从路径中获取单独文件名
