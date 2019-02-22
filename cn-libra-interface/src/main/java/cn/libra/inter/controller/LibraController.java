@@ -46,15 +46,36 @@ public class LibraController implements DubboCotroller {
 
         JSONObject params = JSONObject.parseObject(paramsStr);
 
-
         params = initParams(params);
+
+        String token = params.getString("accessToken");
+
+
         String type = params.getString("userType");
 
         String controllerPath = childrenName + "_" + serviceName + "_" + methodName;
 
+        // 当 accessToken 为空时,对不同接口进行不同处理
+        if(StringUtil.isEmpty(token)){
+
+            // 非登入接口
+            if(!controllerPath.equals("server_base_login")){
+                throw new ControllerException("登入信息过期");
+            }
+
+        }else if(!token.equals(redisUtil.get("token").toString())){
+            throw new ControllerException("登入信息过期");
+        }
+
+
 
         JSONObject jsonObject = makeSuccessJson(params, childrenName, serviceName, methodName, controllerPath);
+
+        token  = redisUtil.get("token").toString();
+
+
         String s = jsonObject.toString();
+        jsonObject.put("token",token);
 
         return jsonObject;
     }
