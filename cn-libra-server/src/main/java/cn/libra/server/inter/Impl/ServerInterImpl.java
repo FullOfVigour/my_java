@@ -5,6 +5,7 @@ import cn.libra.server.service.BaseServiece;
 import cn.libra.server.service.ConsultService;
 import cn.libra.server.service.callServeice.Provide;
 import cn.libra.utils.util.exception.ControllerException;
+import cn.libra.utils.util.redis.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
