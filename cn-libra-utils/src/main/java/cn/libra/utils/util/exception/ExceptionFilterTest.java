@@ -64,43 +64,47 @@ public class ExceptionFilterTest implements Filter {
 
 
                     Throwable cause = exception.getCause();
-                    String supperMessage = exception.getMessage();
-                    String message = null;
+                    String message = exception.getMessage();
+                    String code = "500";
+
                     if (cause != null) {
                         message  = cause.getMessage();
                     }
-                    json.put("code","500");
-                    json.put("mess","操作失败：" + (StringUtil.isNotEmpty(supperMessage) ? supperMessage : "" )+ (StringUtil.isNotEmpty(message) ? ":" +message : ""));
 
-                    error.put("error",json);
-                    error.put("data",new JSONObject());
+                    //先判断是不是自定义异常
+                    if (exception instanceof ControllerException || cause instanceof ControllerException) {
+                        code = message.split("_")[0];
+                        message  = message.split("_")[1];
+                        logger.error("发生错误："+  message);
+                        json.put("code",code);
+                        json.put("mess","操作失败：" +  message);
+                        error.put("error",json);
+                        return new RpcResult(error);
+                    }
+
+
 
                     // 如果是checked异常，直接抛出
                     if (! (exception instanceof RuntimeException) && (exception instanceof Exception)) {
-                        logger.error("发生错误："+ (StringUtil.isNotEmpty(supperMessage) ? supperMessage : "" )+ (StringUtil.isNotEmpty(message) ? ":" +message : ""));
-                        return new RpcResult(error);
+                        logger.error("发生错误："+ message);
                     }
 
                     // 是JDK自带的异常，直接抛出
                     String className = exception.getClass().getName();
                     if (className.startsWith("java.") || className.startsWith("javax.")) {
                         json.put("mess", "请求失败，请联系管理员！我们将尽最大努力为你服务！");
-                        logger.error("发生JDK错误："+  (StringUtil.isNotEmpty(supperMessage) ? supperMessage : "" )+ (StringUtil.isNotEmpty(message) ? ":" +message : ""));
-                        return new RpcResult(error);
+                        logger.error("发生JDK错误："+  message);
                     }
 
                     // 是Dubbo本身的异常，直接抛出
                     if (exception instanceof RpcException) {
                         json.put("mess", "请求失败，请联系管理员！我们将尽最大努力为你服务！");
-                        logger.error("发生Dubbo库错误："+  (StringUtil.isNotEmpty(supperMessage) ? supperMessage : "" )+ (StringUtil.isNotEmpty(message) ? ":" +message : ""));
-                        return new RpcResult(error);
+                        logger.error("发生Dubbo库错误："+  message);
                     }
 
-                    if (exception instanceof ControllerException) {
-                        logger.error("发生错误："+  (StringUtil.isNotEmpty(supperMessage) ? supperMessage : "" )+ (StringUtil.isNotEmpty(message) ? ":" +message : ""));
-                        return new RpcResult(error);
-                    }
-
+                    json.put("code",code);
+                    json.put("mess","操作失败：" + message);
+                    error.put("error",json);
                     // 否则，包装成RuntimeException抛给客户端
                     return new RpcResult(error);
                 } catch (Throwable e) {
