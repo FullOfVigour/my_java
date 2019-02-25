@@ -16,8 +16,9 @@ public class ConsultService {
 	* @author: sx
 	**/
 	public JSONObject listConsult(JSONObject params){
-
-		return receive.getUserMap();
+		JSONObject jsonObject = new JSONObject();
+//		return receive.getUserMap();
+		return jsonObject;
 	}
 
 
