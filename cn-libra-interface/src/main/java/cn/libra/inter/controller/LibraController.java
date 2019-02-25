@@ -18,6 +18,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Component
@@ -29,6 +31,8 @@ public class LibraController implements DubboCotroller {
     RedisUtil redisUtil;
 
     private final static String TOURIST = "TOURIST";
+
+    private final static List<String> ApisForLogin= Arrays.asList("server_base_login", "bar", "baz");
 
 
 
@@ -59,23 +63,26 @@ public class LibraController implements DubboCotroller {
         if(StringUtil.isEmpty(token)){
 
             // 非登入接口
-            if(!controllerPath.equals("server_base_login")){
-                throw new ControllerException("登入信息过期");
+            if (!ApisForLogin.contains(controllerPath)){
+                throw new ControllerException(505,"登入信息过期,请重新登入");
             }
+            else {
 
-        }else if(!token.equals(redisUtil.get("token").toString())){
-            throw new ControllerException("登入信息过期");
+            }
+        }
+        else if(StringUtil.isEmpty(StringUtil.getNullStr(redisUtil.get(token)))){
+            throw new ControllerException(505,"登入信息过期,请重新登入");
         }
 
 
 
         JSONObject jsonObject = makeSuccessJson(params, childrenName, serviceName, methodName, controllerPath);
 
-        token  = redisUtil.get("token").toString();
 
 
         String s = jsonObject.toString();
-        jsonObject.put("token",token);
+
+//        jsonObject.put("token",StringUtil.getNullStr(redisUtil.get(token)));
 
         return jsonObject;
     }
