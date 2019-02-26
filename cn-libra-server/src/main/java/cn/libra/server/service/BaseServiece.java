@@ -64,7 +64,10 @@ import java.util.Date;
 		String token = Base64Util.encode("loginName:"+loginName+";"+"loginTime:"+StringUtil.getNullStr(date)+";"+"xuhan;");
 
 
-		redisUtil.set(token,token,60 * 60 * 2L);
+		jsonObject.put("studentId",user.getId());
+//		jsonObject.put("studentId",user.getName());
+
+		redisUtil.set(token,jsonObject,60 * 60 * 2L);
 
 		jsonObject.put("token",token);
 
