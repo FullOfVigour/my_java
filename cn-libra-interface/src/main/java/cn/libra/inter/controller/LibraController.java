@@ -42,8 +42,15 @@ public class LibraController implements DubboCotroller {
     @Produces({MediaType.APPLICATION_JSON + "; " + MediaType.CHARSET_PARAMETER + "=UTF-8", MediaType.TEXT_XML + "; " + MediaType.CHARSET_PARAMETER + "=UTF-8"})
     public JSONObject callController(String paramsStr, @Context HttpServletRequest httpServletRequest, @Context HttpServletResponse httpServletResponse, @PathParam("childrenName") String childrenName, @PathParam("serviceName") String serviceName, @PathParam("methodName") String methodName) throws Exception {
 
+        System.out.println("\n\n\n刚进来的paramsStr：" + paramsStr+"\n\n\n");
+
         // 对前台数据根据进行转码,将其解析为 json 类型的 String
         paramsStr = URLDecoder.decode(paramsStr);
+
+
+        System.out.println("\n\n\n转译之后的paramsStr：" + paramsStr+"\n\n\n");
+
+
         if (paramsStr.indexOf("apiparams=") > -1) {
             paramsStr = paramsStr.replaceFirst("apiparams=", "");
         }
