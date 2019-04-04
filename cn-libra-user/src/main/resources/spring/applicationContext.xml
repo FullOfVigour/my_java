@@ -116,7 +116,7 @@
         <!--c3p0连接池的私有属性 -->
         <property name="testConnectionOnCheckin" value="false" />
         <property name="testConnectionOnCheckout" value="true" />
-        <property name="maxPoolSize" value="5000" />
+        <property name="maxPoolSize" value="50" />
         <property name="minPoolSize" value="30" />
         <!--获取连接超时时间 -->
         <property name="checkoutTimeout" value="50000" />
