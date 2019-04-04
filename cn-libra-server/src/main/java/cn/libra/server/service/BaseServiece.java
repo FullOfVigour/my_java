@@ -10,14 +10,14 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 
 import java.util.Date;
 
 
 @Component @Transactional(readOnly = true) public class BaseServiece {
 
-	@Autowired UserMapper userMapper;
+	@Autowired
+	UserMapper userMapper;
 
 
 	@Autowired RedisUtil redisUtil;
